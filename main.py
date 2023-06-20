@@ -46,8 +46,6 @@ sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 # ----------------------- CHECK ISS POSITION/TIME & SEND EMAIL ---------------------- #
 
 
-# TODO: Check if your location is within +5 or -5 degrees of the ISS position.
-
 def check_for_iss():
     latitude_distance_difference = abs(iss_latitude - MY_LAT)
     longitude_distance_difference = abs(iss_longitude - MY_LONG)
