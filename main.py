@@ -3,6 +3,7 @@
 import smtplib
 import requests
 from datetime import datetime
+import time
 
 # ---------------------- CONSTANTS -------------------- #
 
@@ -49,7 +50,7 @@ sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 def check_for_iss():
     latitude_distance_difference = abs(iss_latitude - MY_LAT)
     longitude_distance_difference = abs(iss_longitude - MY_LONG)
-    if latitude_distance_difference <= 5 and longitude_distance_difference <= 5:
+    while latitude_distance_difference <= 5 and longitude_distance_difference <= 5:
         if sunset < hour_now < sunrise:
             with smtplib.SMTP("smtp.gmail.com") as connection:
                 connection.starttls()
@@ -58,11 +59,13 @@ def check_for_iss():
                                     to_addrs=yahoo_testing_acc,
                                     msg=f"Subject:Look up!\n\nThe ISS is overhead in your location."
                                     )
+                time.sleep(60)
 
 
 # -------------------- SENDING THE EMAIL -------------------- #
 
 # BONUS: run the code every 60 seconds.
+check_for_iss()
 # While loop or detection method to make the count stop once the ISS disappears?
 
 
