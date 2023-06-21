@@ -50,7 +50,7 @@ sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 def check_for_iss():
     latitude_distance_difference = abs(iss_latitude - MY_LAT)
     longitude_distance_difference = abs(iss_longitude - MY_LONG)
-    while latitude_distance_difference <= 5 and longitude_distance_difference <= 5:
+    if latitude_distance_difference <= 5 and longitude_distance_difference <= 5:
         if sunset < hour_now < sunrise:
             with smtplib.SMTP("smtp.gmail.com") as connection:
                 connection.starttls()
@@ -60,6 +60,7 @@ def check_for_iss():
                                     msg=f"Subject:Look up!\n\nThe ISS is overhead in your location."
                                     )
                 time.sleep(60)
+                check_for_iss()
 
 
 # -------------------- SENDING THE EMAIL -------------------- #
